@@ -1,0 +1,28 @@
+
+/* working with how to make tables in css */
+/* .divTable{
+	display: table;
+	width: 100%;
+} */
+.criminalsContainer {
+
+    display: flex;
+    flex-flow: wrap;
+    justify-content: space-around;
+    font-variant: all-petite-caps;
+
+}
+.criminals data {
+    border: solid;
+}
+  
+
+
+/* .criminals.data {
+    display: inline-block;
+    border: black 2px;
+    color: black;   
+    text-size-adjust: 20px;
+     
+    
+} */
