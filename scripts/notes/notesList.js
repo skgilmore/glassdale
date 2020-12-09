@@ -7,6 +7,10 @@ const contentTarget = document.querySelector(".noteList")
 const eventHub = document.querySelector(".container")
 
 eventHub.addEventListener("showNotesClicked", () => {
+
+    NoteList()
+})
+eventHub.addEventListener("saveNotes", () => {
     NoteList()
 })
 

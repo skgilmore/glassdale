@@ -1,12 +1,23 @@
 import { criminals } from "./criminals.js"
 import { getCriminals, useCriminals } from "./criminalsProvider.js"
 import {  useCrimes } from "../convictions/convictionsProvider.js"
+import { useOfficers, getOfficers} from "../officers/OfficerProvider.js"
 
 const criminalElement = document.querySelector(".criminalsContainer")
 const eventHub = document.querySelector(".container")
+const officerElement = document.querySelector(".officersContainer")
 
-
-
+eventHub.addEventListener('officerSelect', event => {
+  if(event.detail.officerThatWasChosen !== "0") {
+    const officers = useOfficers()
+    const officer = officers.find (  (o) => o.id ===parseInt(event.detail.officerThatWasChosen) )
+    const alsocriminals = useCrimes ()
+    const matchedCriminals = alsocriminals.filter( (find) => find.arrestingOfficer === officer.name )
+    render (matchedCriminals)
+    
+  }
+}
+)
 // Listen for the custom event you dispatched in ConvictionSelect
 eventHub.addEventListener('crimeChosen', event => {
   // Use the property you added to the event detail.
@@ -55,6 +66,20 @@ export const criminalsList = () => {
       criminalElement.innerHTML = criminalCards.join("") 
     }
 
-
+    // export const officersList = () => {
+    //   getOfficers()
+    //       .then( () => {
+    //           let  cops = useOfficers()
+    //           render(cops)
+    //       })
+    //     }
+    
+    //     const render = (police) => {
+    //       let officerCards = []
+    //       for (const cop of police) {
+    //         officerCards.push(police(cop))
+    //       }
+         
+    //     }
 
                                     
