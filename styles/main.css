@@ -1,1 +1,4 @@
 @import "criminals.css";
+aside {
+    border-spacing: 25%;
+}
