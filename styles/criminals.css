@@ -7,17 +7,33 @@
 .criminalsContainer {
 
     display: flex;
-    flex-flow: wrap;
-    justify-content: space-around;
-    font-variant: all-petite-caps;
+    flex-wrap: wrap;
+    align-content: center;
+}
+
+.criminals.data{
+    background: white;
+    flex-basis: 24%;
+    margin: 5px;
+    border: 2px solid rgb(22, 22, 58);
+    box-shadow: 3px 10px 10px 0 rgba(0,0,0,0.2);
 
 }
-.criminals data {
-    border: solid;
+.noteFormContainer{
+    display: inline-grid
 }
-  
-
-
+.body {
+    display: inline-grid
+}
+.aside {
+    display: flex;
+    flex-wrap: wrap;
+    flex-basis: 38%;
+    margin: 0 3% 3% 3%;
+}
+.header{
+    margin-top: 22px;
+}
 /* .criminals.data {
     display: inline-block;
     border: black 2px;
