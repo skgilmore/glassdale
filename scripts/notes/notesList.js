@@ -1,17 +1,27 @@
 import { getNotes, useNotes } from "./notesProvider.js";
 import { NoteHTMLConverter } from "./notes.js";
-
+let visible = false
 // Query the DOM for the element that your notes will be added to 
 const contentTarget = document.querySelector(".noteList")
 // Define ye olde Evente Hubbe
 const eventHub = document.querySelector(".container")
 
 eventHub.addEventListener("showNotesClicked", () => {
+    if (visible === false) {
+    NoteList()
+    visible = true
+    
+}
+else {
+    contentTarget.innerHTML= ""
+    visible = false
+}
 
-    NoteList()
 })
-eventHub.addEventListener("saveNotes", () => {
+eventHub.addEventListener("noteStateChanged", () => {
+    if (visible === true) {
     NoteList()
+    }
 })
 
 const render = (noteArray) => {
