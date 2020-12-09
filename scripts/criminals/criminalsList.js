@@ -8,18 +8,30 @@ const eventHub = document.querySelector(".container")
 const officerElement = document.querySelector(".officersContainer")
 
 eventHub.addEventListener('officerSelect', event => {
-  if(event.detail.officerThatWasChosen !== "0") {
-    const officers = useOfficers()
-    const officer = officers.find (  (o) => o.id ===parseInt(event.detail.officerThatWasChosen) )
-    const alsocriminals = useCrimes ()
-    const matchedCriminals = alsocriminals.filter( (find) => find.arrestingOfficer === officer.name )
-    render (matchedCriminals)
+  if(event.detail.officer !== "0") {
+    const allofficers = useOfficers()
+    const officerFilter = allofficers.find (  (o) => o.id ===parseInt(event.detail.officer) )
+    const criminals = useCriminals ()
+    const filterCriminals = criminals.filter(
+      criminalObject => {
+        if (criminalObject.arrestingOfficer  === officerFilter.name) {
+          
+       
+          return criminalObject
+          
+        
+        }
+      }
+    )
+    render(filterCriminals)
     
   }
 }
 )
+
 // Listen for the custom event you dispatched in ConvictionSelect
 eventHub.addEventListener('crimeChosen', event => {
+  
   // Use the property you added to the event detail.
   if (event.detail.crimeThatWasChosen !== "0"){
       // crimeThatwasChosen and crimeChosen must match what you called the event
@@ -49,7 +61,7 @@ eventHub.addEventListener('crimeChosen', event => {
 )
 
 
-// Render ALL criminals initally
+// Render ALL criminals initally this runs the render for both events. dont need to have seperate renders
 export const criminalsList = () => {
   getCriminals()
       .then( () => {
@@ -58,7 +70,7 @@ export const criminalsList = () => {
       })
     }
 
-    const render = (criminal) => {
+    let render = (criminal) => {
       let criminalCards = []
       for (const perp of criminal) {
         criminalCards.push(criminals(perp))
@@ -66,20 +78,6 @@ export const criminalsList = () => {
       criminalElement.innerHTML = criminalCards.join("") 
     }
 
-    // export const officersList = () => {
-    //   getOfficers()
-    //       .then( () => {
-    //           let  cops = useOfficers()
-    //           render(cops)
-    //       })
-    //     }
     
-    //     const render = (police) => {
-    //       let officerCards = []
-    //       for (const cop of police) {
-    //         officerCards.push(police(cop))
-    //       }
-         
-    //     }
-
+  
                                     
