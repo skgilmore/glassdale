@@ -1,4 +1,5 @@
 import { saveNote} from "./notesProvider.js"
+import { getCriminals, useCriminals } from "../criminals/criminalsProvider.js"
 
 const eventHub = document.querySelector(".container")
 const contentTarget= document.querySelector(".noteFormContainer")
@@ -10,7 +11,7 @@ eventHub.addEventListener("click", clickEvent => {
     
     if (clickEvent.target.id === "saveNote") {
 
-        const suspect = document.querySelector("#suspect").value
+        const criminalId= parseInt(document.querySelector("#suspect").value)
         const author =document.querySelector("#author").value
         // const timeStamp= document.querySelector("timeStamp").value
         const text = document.querySelector("#text").value
@@ -19,9 +20,9 @@ eventHub.addEventListener("click", clickEvent => {
         const newNote = {
             // Key/value pairs here
             timeStamp: Date.now(),
-            text: text,
-            author: author,
-            suspect: suspect,
+            text,
+            author,
+            criminalId
             
         }
 
@@ -31,13 +32,31 @@ eventHub.addEventListener("click", clickEvent => {
 })
 
 const render = () => {
+    const criminalsCollection = useCriminals()
+    
     contentTarget.innerHTML = `
         <input type="text" id="author" placeholder="Your Name">
         <textarea id="text" placeholder="Write Your Note Here"></textarea>
-        <input type="text" id="suspect" placeholder="Suspects">
+
+        <select class="dropdown" id="suspect">
+            <option value="0">Please select a suspect...</option>
+            ${
+                criminalsCollection.map(
+                (criminal) => `
+                    <option value=${criminal.id}>
+                    ${criminal.name}
+                    </option>
+                `)
+            }
+        </select>
+
+
         <button id="saveNote">Save Note</button>
     `
 }
 export const NoteForm = () => {
-    render()
+    getCriminals()
+    .then( () => render())
 }
+
+

@@ -2,6 +2,9 @@ import { criminals } from "./criminals.js"
 import { getCriminals, useCriminals } from "./criminalsProvider.js"
 import {  useCrimes } from "../convictions/convictionsProvider.js"
 import { useOfficers, getOfficers} from "../officers/OfficerProvider.js"
+import { useCriminalFacilities, getCriminalFacilities } from "../facility/criminalFacility.js"
+import { getFacilities,useFacilities } from "../facility/facilityProvider.js"
+
 
 const criminalElement = document.querySelector(".criminalsContainer")
 const eventHub = document.querySelector(".container")
@@ -59,25 +62,51 @@ eventHub.addEventListener('crimeChosen', event => {
     
   }
 )
-
+let perps = []
+let crimFac = []
+let facilities= []
 
 // Render ALL criminals initally this runs the render for both events. dont need to have seperate renders
 export const criminalsList = () => {
   getCriminals()
-      .then( () => {
-          let  perps = useCriminals()
-          render(perps)
+      .then(getCriminalFacilities)
+      .then(getFacilities)
+      .then( 
+        () => {
+          perps = useCriminals()
+          facilities = useFacilities()
+          crimFac = useCriminalFacilities()
+          render(perps) 
+          // does this work if render param is blank?
       })
     }
 
-    let render = (criminal) => {
-      let criminalCards = []
-      for (const perp of criminal) {
-        criminalCards.push(criminals(perp))
-      }
-      criminalElement.innerHTML = criminalCards.join("") 
-    }
+    // let render = (criminal) => {
+    //   let criminalCards = []
+    //   for (const perp of criminal) {
+    //     criminalCards.push(criminals(perp))
+    //   }
+    //   criminalElement.innerHTML = criminalCards.join("") 
+    // }
 
     
   
-                                    
+    const render = (criminalList) => {
+      // Step 1 - Iterate all criminals
+      
+      criminalElement.innerHTML = criminalList.map(
+          (criminalObject) => {
+              // Step 2 - Filter all relationships to get only ones for this criminal
+              const facilityRelationshipsForThisCriminal = crimFac.filter(cf => cf.criminalId === criminalObject.id)
+  
+              // Step 3 - Convert the relationships to facilities with map()
+              const facilitiesMap = facilityRelationshipsForThisCriminal.map(cf => {
+                  const matchingFacilityObject = facilities.find(facility => facility.id === cf.facilityId)
+                  return matchingFacilityObject
+              })
+  
+              // Must pass the matching facilities to the Criminal component
+              return criminals(criminalObject, facilitiesMap)
+          }
+      ).join("")
+  }
