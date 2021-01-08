@@ -1,3 +1,21 @@
+const eventHub = document.querySelector('.container')
+
+eventHub.addEventListener('click', evt => {
+    if (!evt.target.id.startsWith('associates--')) {
+    return;
+    }
+
+    const idParts = evt.target.id.split('--');
+    const criminalId = parseInt(idParts[1]);
+  
+    eventHub.dispatchEvent(new CustomEvent('associatesChosen', {
+      detail: { criminalId }
+    }));
+  });
+
+// the !evt means if value is equal to false
+
+
 export const criminals = (criminalsObject, facilities) => {
     return `
     <section class="criminals data">
@@ -7,6 +25,9 @@ export const criminals = (criminalsObject, facilities) => {
     <div class="criminals__incarcerationStart">Incarcerated" ${new Date(criminalsObject.incarceration.start).toLocaleDateString('en-US')}</div>
     <div class="criminals__incarcerationEnd">Released: ${new Date(criminalsObject.incarceration.end).toLocaleDateString('en-US')}</div>
     <div>
+    <div class"button-container">
+    <button id="associates--${criminalsObject.id}">Associate Alibis</button>
+    </div>
     <h2>Facilities</h2>
     <ul>
         ${facilities.map(forEachObject => `<li>${forEachObject.facilityName}</li>`).join("")}
@@ -17,6 +38,5 @@ export const criminals = (criminalsObject, facilities) => {
     `
 }
 
-    // <button id="associates--${criminal.id}">Associate Alibis</button>
 
 
