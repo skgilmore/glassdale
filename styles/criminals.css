@@ -22,6 +22,12 @@
 .noteFormContainer{
     display: inline-grid
 }
+.noteListContainer{
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center
+}
+
 .body {
     display: inline-grid
 }
