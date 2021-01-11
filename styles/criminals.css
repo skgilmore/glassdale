@@ -4,7 +4,7 @@
 	display: table;
 	width: 100%;
 } */
-.criminalsContainer {
+.listContainer {
 
     display: flex;
     flex-wrap: wrap;

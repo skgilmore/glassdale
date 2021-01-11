@@ -6,7 +6,7 @@ import { useCriminalFacilities, getCriminalFacilities } from "../facility/crimin
 import { getFacilities,useFacilities } from "../facility/facilityProvider.js"
 import './alibis.js'
 
-const criminalElement = document.querySelector(".criminalsContainer")
+const criminalElement = document.querySelector(".listContainer")
 const eventHub = document.querySelector(".container")
 const officerElement = document.querySelector(".officersContainer")
 
@@ -48,8 +48,8 @@ eventHub.addEventListener('crimeChosen', event => {
       // above this you are calling the parameter c this can be anything but must match the pairing before id
       // parseInt is a built in function that returns a number that is in a string instead of "number"
        
-      const criminal = useCriminals()
-      const matchingCriminals =  criminal.filter( (criminals) => criminals.conviction === crime.name     )
+      const criminals = useCriminals()
+      const matchingCriminals =  criminals.filter( (criminals) => criminals.conviction === crime.name     )
           // the conviction and name properties must be associated with exisitng propertys of given object
       render(matchingCriminals)
   }
