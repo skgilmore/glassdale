@@ -33,6 +33,6 @@ const witnessList = () => {
 
 // List for custom click event to show witness List
 
-eventHub.addEventListener("showWitnessClicked", e => {
+eventHub.addEventListener("witnessListGenerateEvent", e => {
     witnessList()
 })

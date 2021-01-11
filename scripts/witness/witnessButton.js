@@ -17,7 +17,7 @@ export const ShowWitnessButton = () => {
 
 contentTarget.addEventListener("click", clickEvent => {
     if (clickEvent.target.id === ("button--showWitness")) {
-        const witnessListGenerateEvent = new CustomEvent("witnessListGenerate");
+        const witnessListGenerateEvent = new CustomEvent("witnessListGenerateEvent");
         eventHub.dispatchEvent(witnessListGenerateEvent);
 
         // const disableAffordanceEvent = new CustomEvent("disableAffordanceEvent");
